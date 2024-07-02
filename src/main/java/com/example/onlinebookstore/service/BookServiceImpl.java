@@ -2,9 +2,9 @@ package com.example.onlinebookstore.service;
 
 import com.example.onlinebookstore.model.Book;
 import com.example.onlinebookstore.repository.BookRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {
