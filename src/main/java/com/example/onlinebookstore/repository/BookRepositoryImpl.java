@@ -3,6 +3,7 @@ package com.example.onlinebookstore.repository;
 import com.example.onlinebookstore.exception.DataProcessingException;
 import com.example.onlinebookstore.model.Book;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -50,6 +51,24 @@ public class BookRepositoryImpl implements BookRepository {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't get all from book", e);
+        }
+    }
+
+    @Override
+    public Optional<Book> findById(Long id) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            Query<Book> query = session.createQuery("from Book "
+                    + "where id = ?", Book.class);
+            query.setParameter("id", id);
+            transaction.commit();
+            return query.uniqueResultOptional();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Can't get book by id: " + id, e);
         }
     }
 }

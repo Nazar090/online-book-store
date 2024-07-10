@@ -1,6 +1,6 @@
 package com.example.onlinebookstore;
 
-import com.example.onlinebookstore.model.Book;
+import com.example.onlinebookstore.dto.CreateBookRequestDto;
 import com.example.onlinebookstore.service.BookService;
 import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +21,23 @@ public class OnlineBookStoreApplication {
     @Bean
     public CommandLineRunner commandLineRunner() {
         return args -> {
-            Book book = new Book();
-            book.setTitle("Bleach");
-            book.setAuthor("5N");
-            book.setIsbn("978-0-306-40615-7");
-            book.setPrice(BigDecimal.TEN);
+            bookService.save(new CreateBookRequestDto(
+                    "Sample Book 1",
+                    "Author A",
+                    "9781234567897",
+                    new BigDecimal("19.99"),
+                    "This is a sample book description.",
+                    "http://example.com/cover1.jpg"
+            ));
 
-            bookService.save(book);
-            System.out.println(bookService.findAll());
+            bookService.save(new CreateBookRequestDto(
+                    "Sample Book 2",
+                    "Author B",
+                    "9789876543210",
+                    new BigDecimal("24.99"),
+                    "Another sample book description.",
+                    "http://example.com/cover2.jpg"
+            ));
         };
     }
 }
