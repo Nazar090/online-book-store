@@ -41,12 +41,12 @@ public class BookServiceImpl implements BookService {
     public void updateBook(Long id, CreateBookRequestDto requestDto) {
         Book book = bookRepository.findById(id).orElseThrow(() ->
                 new RuntimeException("Book not found"));
-        book.setTitle(requestDto.title());
-        book.setAuthor(requestDto.author());
-        book.setIsbn(requestDto.isbn());
-        book.setPrice(requestDto.price());
-        book.setDescription(requestDto.description());
-        book.setCoverImage(requestDto.coverImage());
+        book.setTitle(requestDto.getTitle());
+        book.setAuthor(requestDto.getAuthor());
+        book.setIsbn(requestDto.getIsbn());
+        book.setPrice(requestDto.getPrice());
+        book.setDescription(requestDto.getDescription());
+        book.setCoverImage(requestDto.getCoverImage());
 
         bookRepository.save(book);
     }
