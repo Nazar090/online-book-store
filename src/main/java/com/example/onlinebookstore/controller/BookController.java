@@ -3,8 +3,10 @@ package com.example.onlinebookstore.controller;
 import com.example.onlinebookstore.dto.BookDto;
 import com.example.onlinebookstore.dto.CreateBookRequestDto;
 import com.example.onlinebookstore.service.BookService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +26,8 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<BookDto> getAll() {
-        return bookService.findAll();
+    public List<BookDto> getAll(Pageable pageable) {
+        return bookService.findAll(pageable);
     }
 
     @GetMapping("{id}")
@@ -35,17 +37,19 @@ public class BookController {
     }
 
     @PostMapping
-    public void createBook(@RequestBody CreateBookRequestDto bookDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createBook(@RequestBody @Valid CreateBookRequestDto bookDto) {
         bookService.save(bookDto);
     }
 
     @PutMapping("{id}")
-    public void updateBook(@PathVariable Long id, @RequestBody CreateBookRequestDto bookDto) {
+    public void updateBook(@PathVariable Long id,
+                           @RequestBody @Valid CreateBookRequestDto bookDto) {
         bookService.updateBook(id, bookDto);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         bookService.deleteById(id);
     }
