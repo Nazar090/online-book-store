@@ -29,6 +29,7 @@ public class BookController {
     public List<BookDto> getAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
+    // I added pagination, sorting and swagger(but I did it before finishing previous task)
 
     @GetMapping("{id}")
     @ResponseBody
