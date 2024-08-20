@@ -9,7 +9,7 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(config = MapperConfig.class)
 public interface UserMapper {
-    UserResponseDto toDo(User user);
+    UserResponseDto toDto(User user);
 
     User toUserEntity(UserRegistrationRequestDto requestDto);
 

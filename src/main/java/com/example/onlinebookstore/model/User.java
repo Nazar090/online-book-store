@@ -1,6 +1,5 @@
 package com.example.onlinebookstore.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,10 +25,8 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
-    @JsonProperty("first_name")
     @Column(nullable = false)
     private String firstName;
-    @JsonProperty("last_name")
     @Column(nullable = false)
     private String lastName;
     private String shippingAddress;
