@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-roles
+      author: nazar
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role
+                  value: admin
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role
+                  value: user
