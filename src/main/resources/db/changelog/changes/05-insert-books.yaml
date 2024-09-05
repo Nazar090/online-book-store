@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-books
+      author: nazar
+      changes:
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "Sample Book 1"
+              - column:
+                  name: author
+                  value: "Author A"
+              - column:
+                  name: isbn
+                  value: "9781234567897"
+              - column:
+                  name: price
+                  valueNumeric: 19.99
+              - column:
+                  name: description
+                  value: "This is a sample book description."
+              - column:
+                  name: cover_image
+                  value: "http://example.com/cover1.jpg"
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "Sample Book 2"
+              - column:
+                  name: author
+                  value: "Author B"
+              - column:
+                  name: isbn
+                  value: "2381234567894"
+              - column:
+                  name: price
+                  valueNumeric: "29.49"
+              - column:
+                  name: description
+                  value: "This is a sample book description."
+              - column:
+                  name: cover_image
+                  value: "http://example.com/cover2.jpg"
