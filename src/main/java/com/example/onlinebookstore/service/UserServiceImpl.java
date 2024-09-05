@@ -28,18 +28,12 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByEmail(requestDto.getEmail())) {
             throw new RegistrationException("User with this email already exists");
         }
-        User user = new User();
-        user.setEmail(requestDto.getEmail());
-        user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
-        user.setRoles(Set.of(roleRepository.findByRole(Role.RoleName.USER)
+        User user = userMapper.toUserEntity(requestDto);
+        Role role = roleRepository.findByRole(Role.RoleName.USER)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Can't find role by role name"
-                                + Role.RoleName.USER.name()))));
-        user.setFirstName(requestDto.getFirstName());
-        user.setLastName(requestDto.getLastName());
-        if (requestDto.getShippingAddress() != null) {
-            user.setShippingAddress(requestDto.getShippingAddress());
-        }
+                        "Can't find role by role name " + Role.RoleName.USER.name()));
+        user.setRoles(Set.of(role));
+        user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
         userRepository.save(user);
         return userMapper.toDto(user);
     }

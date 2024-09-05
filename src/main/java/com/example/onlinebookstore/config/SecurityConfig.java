@@ -1,6 +1,7 @@
 package com.example.onlinebookstore.config;
 
 import com.example.onlinebookstore.security.CustomUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -12,12 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailService;
-
-    public SecurityConfig(CustomUserDetailsService customUserDetailService) {
-        this.customUserDetailService = customUserDetailService;
-    }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
