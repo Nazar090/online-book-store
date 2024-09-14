@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-users
+      author: nazar
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: "admin@gmail.com"
+              - column:
+                  name: password
+                  value: "$2a$10$mvHBSKYI0CrvMxkxZHwlZ.XthjQgWb1zHyw3XULTSGEEoIJZyJ6Au"
+              - column:
+                  name: first_name
+                  value: "Lebron"
+              - column:
+                  name: last_name
+                  value: "James"
+              - column:
+                  name: shipping_address
+                  value: "LA"
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: "user@gmail.com"
+              - column:
+                  name: password
+                  value: "$2a$10$mvHBSKYI0CrvMxkxZHwlZ.XthjQgWb1zHyw3XULTSGEEoIJZyJ6Au"
+              - column:
+                  name: first_name
+                  value: "Steph"
+              - column:
+                  name: last_name
+                  value: "Curry"
+              - column:
+                  name: shipping_address
+                  value: "SF"

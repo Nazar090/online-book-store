@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-books-table
+      id: create-users-table
       author: nazar
       changes:
         - createTable:
-            tableName: books
+            tableName: users
             columns:
               - column:
                   name: id
@@ -14,31 +14,28 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: title
+                  name: email
                   type: VARCHAR(255)
                   constraints:
-                    nullable: false
-              - column:
-                  name: author
-                  type: VARCHAR(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: isbn
-                  type: VARCHAR(255)
-                  constraints:
-                    nullable: false
                     unique: true
+                    nullable: false
               - column:
-                  name: price
-                  type: DECIMAL(19,2)
+                  name: password
+                  type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
-                  name: description
+                  name: first_name
                   type: VARCHAR(255)
+                  constraints:
+                    nullable: false
               - column:
-                  name: cover_image
+                  name: last_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: shipping_address
                   type: VARCHAR(255)
               - column:
                   name: is_deleted
