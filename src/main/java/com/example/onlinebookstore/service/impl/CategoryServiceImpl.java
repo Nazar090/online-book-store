@@ -42,14 +42,12 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Can't find category by id "
                         + id));
-        category.setName(categoryDto.name());
-        category.setDescription(categoryDto.description());
-        Category updatedCategory = categoryRepository.save(category);
-        return categoryMapper.toDto(updatedCategory);
+        categoryMapper.updateCategoryFromDto(categoryDto, category);
+        return categoryMapper.toDto(categoryRepository.save(category));
     }
 
     @Override
     public void deleteById(Long id) {
-        categoryRepository.softDeleteById(id);
+        categoryRepository.deleteById(id);
     }
 }

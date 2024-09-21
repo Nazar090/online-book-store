@@ -25,12 +25,13 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
 
     @Override
-    public void save(CreateBookRequestDto requestDto) {
+    public BookDto save(CreateBookRequestDto requestDto) {
         Book book = bookMapper.toBookEntity(requestDto);
         Set<Category> categories = new HashSet<>(
                 categoryRepository.findAllById(requestDto.getCategoryIds()));
         book.setCategories(categories);
         bookRepository.save(book);
+        return bookMapper.toDto(book);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteById(Long id) {
-        bookRepository.softDeleteById(id);
+        bookRepository.deleteById(id);
     }
 
     @Override

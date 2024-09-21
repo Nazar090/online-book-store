@@ -11,13 +11,13 @@ import lombok.Setter;
 @Getter
 public class BookDto {
     private Long id;
-    @NotBlank(message = "Title mustn't be null or empty")
+    @NotBlank
     private String title;
-    @NotBlank(message = "Author mustn't be null or empty")
+    @NotBlank
     private String author;
-    @NotBlank(message = "Isbn mustn't be null or empty")
+    @NotBlank
     private String isbn;
-    @Min(value = 0, message = "Price mustn't be negative")
+    @Min(value = 0)
     private BigDecimal price;
     private String description;
     private String coverImage;
