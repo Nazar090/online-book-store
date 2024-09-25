@@ -1,6 +1,7 @@
 package com.example.onlinebookstore.service;
 
 import com.example.onlinebookstore.dto.category.CategoryDto;
+import com.example.onlinebookstore.dto.category.CategoryRequestDto;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 
@@ -11,7 +12,7 @@ public interface CategoryService {
 
     CategoryDto save(CategoryDto categoryDto);
 
-    CategoryDto update(Long id, CategoryDto categoryDto);
+    CategoryDto update(Long id, CategoryRequestDto categoryDto);
 
     void deleteById(Long id);
 }

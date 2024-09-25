@@ -2,6 +2,7 @@ package com.example.onlinebookstore.controller;
 
 import com.example.onlinebookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.example.onlinebookstore.dto.category.CategoryDto;
+import com.example.onlinebookstore.dto.category.CategoryRequestDto;
 import com.example.onlinebookstore.service.BookService;
 import com.example.onlinebookstore.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -60,7 +61,7 @@ public class CategoryController {
             description = "Put a new category by a certain ID")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public CategoryDto updateCategory(@PathVariable Long id,
-                                      @RequestBody @Valid CategoryDto categoryDto) {
+                                      @RequestBody @Valid CategoryRequestDto categoryDto) {
         return categoryService.update(id, categoryDto);
     }
 

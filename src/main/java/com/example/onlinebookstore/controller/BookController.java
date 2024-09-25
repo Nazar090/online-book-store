@@ -47,16 +47,16 @@ public class BookController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new book", description = "Add a new book to the store")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void createBook(@RequestBody @Valid CreateBookRequestDto bookDto) {
-        bookService.save(bookDto);
+    public BookDto createBook(@RequestBody @Valid CreateBookRequestDto bookDto) {
+        return bookService.save(bookDto);
     }
 
     @PutMapping("{id}")
     @Operation(summary = "Put a book by ID", description = "Put a new book by a certain ID")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateBook(@PathVariable Long id,
+    public BookDto updateBook(@PathVariable Long id,
                            @RequestBody @Valid CreateBookRequestDto bookDto) {
-        bookService.updateBook(id, bookDto);
+        return bookService.updateBook(id, bookDto);
     }
 
     @DeleteMapping("{id}")

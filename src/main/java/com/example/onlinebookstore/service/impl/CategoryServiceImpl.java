@@ -1,6 +1,7 @@
 package com.example.onlinebookstore.service.impl;
 
 import com.example.onlinebookstore.dto.category.CategoryDto;
+import com.example.onlinebookstore.dto.category.CategoryRequestDto;
 import com.example.onlinebookstore.exception.EntityNotFoundException;
 import com.example.onlinebookstore.mapper.CategoryMapper;
 import com.example.onlinebookstore.model.Category;
@@ -38,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto update(Long id, CategoryDto categoryDto) {
+    public CategoryDto update(Long id, CategoryRequestDto categoryDto) {
         Category category = categoryRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Can't find category by id "
                         + id));
