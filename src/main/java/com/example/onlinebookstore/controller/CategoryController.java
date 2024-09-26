@@ -37,7 +37,7 @@ public class CategoryController {
     @Operation(summary = "Create a new category",
             description = "Add a new category to the data")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public CategoryDto createCategory(@RequestBody @Valid CategoryDto categoryDto) {
+    public CategoryDto createCategory(@RequestBody @Valid CategoryRequestDto categoryDto) {
         return categoryService.save(categoryDto);
     }
 
