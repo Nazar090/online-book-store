@@ -4,7 +4,7 @@ databaseChangeLog:
       author: nazar
       changes:
         - createTable:
-            tableName: shopping_cart
+            tableName: shopping_carts
             columns:
               - column:
                   name: id
@@ -18,14 +18,8 @@ databaseChangeLog:
                   type: BIGINT
                   constraints:
                     nullable: false
-              - column:
-                  name: is_deleted
-                  type: BIT
-                  defaultValueBoolean: false
-                  constraints:
-                    nullable: false
         - addForeignKeyConstraint:
-            baseTableName: shopping_cart
+            baseTableName: shopping_carts
             baseColumnNames: user_id
             referencedTableName: users
             referencedColumnNames: id

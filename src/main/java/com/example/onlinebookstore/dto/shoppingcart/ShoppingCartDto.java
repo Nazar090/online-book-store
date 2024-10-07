@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ShoppingCartResponseDto {
+public class ShoppingCartDto {
     private Long id;
     private Long userId;
     private Set<CartItemResponseDto> cartItems = new HashSet<>();

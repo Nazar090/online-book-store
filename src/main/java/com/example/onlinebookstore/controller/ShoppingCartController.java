@@ -2,9 +2,9 @@ package com.example.onlinebookstore.controller;
 
 import com.example.onlinebookstore.dto.cartitem.CartItemQuantityDto;
 import com.example.onlinebookstore.dto.cartitem.CartItemRequestDto;
-import com.example.onlinebookstore.dto.cartitem.CartItemResponseDto;
-import com.example.onlinebookstore.dto.shoppingcart.ShoppingCartResponseDto;
+import com.example.onlinebookstore.dto.shoppingcart.ShoppingCartDto;
 import com.example.onlinebookstore.exception.EntityNotFoundException;
+import com.example.onlinebookstore.model.User;
 import com.example.onlinebookstore.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,21 +34,22 @@ public class ShoppingCartController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Add a cart item", description = "Add a cart item to shopping cart")
-    public CartItemResponseDto addCartItem(
+    public ShoppingCartDto addCartItem(
             @RequestBody @Valid CartItemRequestDto cartItemRequestDto) {
-        return shoppingCartService.addCartItem(getAuthenticationName(), cartItemRequestDto);
+        return shoppingCartService.addCartItem(getUserId(), cartItemRequestDto);
     }
 
     @GetMapping
     @Operation(summary = "Get a shopping cart", description = "Get a shopping cart")
-    public ShoppingCartResponseDto getShoppingCart() {
-        return shoppingCartService.getShoppingCartByUserEmail(getAuthenticationName());
+    public ShoppingCartDto getShoppingCart() {
+        return shoppingCartService.getShoppingCartByUserId(getUserId());
     }
 
     @PutMapping("/items/{cartItemId}")
     @Operation(summary = "Update a quantity", description = "Update a quantity book")
-    public CartItemResponseDto updateCartItem(@PathVariable Long cartItemId,
-                                      @RequestBody @Valid CartItemQuantityDto cartItemQuantityDto) {
+    public ShoppingCartDto updateCartItem(
+            @PathVariable Long cartItemId,
+            @RequestBody @Valid CartItemQuantityDto cartItemQuantityDto) {
         return shoppingCartService.updateBookQuantity(cartItemId, cartItemQuantityDto);
     }
 
@@ -58,10 +60,11 @@ public class ShoppingCartController {
         shoppingCartService.deleteCartItemById(cartItemId);
     }
 
-    private String getAuthenticationName() {
+    private Long getUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            return authentication.getName();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            User user = (User) authentication.getPrincipal();
+            return user.getId();
         }
         throw new EntityNotFoundException(
                 "Can't find authentication name by authentication " + authentication);

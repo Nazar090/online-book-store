@@ -2,16 +2,15 @@ package com.example.onlinebookstore.service;
 
 import com.example.onlinebookstore.dto.cartitem.CartItemQuantityDto;
 import com.example.onlinebookstore.dto.cartitem.CartItemRequestDto;
-import com.example.onlinebookstore.dto.cartitem.CartItemResponseDto;
-import com.example.onlinebookstore.dto.shoppingcart.ShoppingCartResponseDto;
+import com.example.onlinebookstore.dto.shoppingcart.ShoppingCartDto;
 
 public interface ShoppingCartService {
-    ShoppingCartResponseDto getShoppingCartByUserEmail(String email);
+    ShoppingCartDto getShoppingCartByUserId(Long userId);
 
-    CartItemResponseDto addCartItem(String email, CartItemRequestDto cartItemRequestDto);
+    ShoppingCartDto addCartItem(Long userId, CartItemRequestDto cartItemRequestDto);
 
-    CartItemResponseDto updateBookQuantity(Long cartItemId,
-                                           CartItemQuantityDto cartItemQuantityDto);
+    ShoppingCartDto updateBookQuantity(Long cartItemId,
+                                       CartItemQuantityDto cartItemQuantityDto);
 
     void deleteCartItemById(Long cartItemId);
 }
