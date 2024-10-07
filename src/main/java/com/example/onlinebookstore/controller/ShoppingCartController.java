@@ -50,7 +50,7 @@ public class ShoppingCartController {
     public ShoppingCartDto updateCartItem(
             @PathVariable Long cartItemId,
             @RequestBody @Valid CartItemQuantityDto cartItemQuantityDto) {
-        return shoppingCartService.updateBookQuantity(cartItemId, cartItemQuantityDto);
+        return shoppingCartService.updateBookQuantity(getUserId(), cartItemId, cartItemQuantityDto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
