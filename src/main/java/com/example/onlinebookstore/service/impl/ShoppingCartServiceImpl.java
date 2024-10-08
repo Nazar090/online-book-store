@@ -57,13 +57,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCartDto updateBookQuantity(Long userId, Long cartItemId,
                                               CartItemQuantityDto cartItemQuantityDto) {
-        CartItem cartItem = cartItemRepository.findById(cartItemId)
-                .orElseThrow(() -> new EntityNotFoundException("Can't find cart items "
-                        + "by cart items id " + cartItemId));
-        cartItem.setQuantity(cartItemQuantityDto.getQuantity());
+        ShoppingCart cart = shoppingCartRepository.findByUserId(userId);
+        CartItem cartItem = cartItemRepository.findByIdAndShoppingCartId(cartItemId, cart.getId())
+                .map(item -> {
+                    item.setQuantity(cartItemQuantityDto.getQuantity());
+                    return item;
+                }).orElseThrow(() -> new EntityNotFoundException(
+                        String.format("No cart item with id: %d for user: %d", cartItemId, userId)
+                ));
         cartItemRepository.save(cartItem);
-        ShoppingCart shoppingCart = cartItem.getShoppingCart();
-        return shoppingCartMapper.toDto(shoppingCart);
+        return shoppingCartMapper.toDto(cart);
     }
 
     @Override
