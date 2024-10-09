@@ -17,9 +17,9 @@ public class UserRegistrationRequestDto {
     @NotBlank
     @Length(min = 8, max = 35)
     @Pattern(
-            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,35}$",
-            message = "Password must contain at least one digit, one lowercase letter,"
-                    + " one uppercase letter, and one special character (@#$%^&+=!)"
+            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!\\-]).{8,35}$",
+            message = "Password must contain at least one digit, one lowercase letter, "
+                    + "one uppercase letter, and one special character (@#$%^&+=!-)"
     )
     private String password;
     @NotBlank
