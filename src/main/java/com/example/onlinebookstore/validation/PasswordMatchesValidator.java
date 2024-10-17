@@ -1,5 +1,6 @@
-package com.example.onlinebookstore.dto.user;
+package com.example.onlinebookstore.validation;
 
+import com.example.onlinebookstore.dto.user.UserRegistrationRequestDto;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
