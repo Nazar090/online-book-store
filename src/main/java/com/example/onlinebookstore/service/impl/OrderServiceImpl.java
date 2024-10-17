@@ -43,9 +43,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderMapper.toEntity(requestDto);
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId);
 
-        order.setUser(userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found by id: "
-                        + userId)));
+        order.setUser(userRepository.findById(userId).orElseThrow());
         order.setTotal(getTotal(shoppingCart));
         order.setOrderDate(LocalDateTime.now());
         Set<OrderItem> orderItems = shoppingCart.getCartItems().stream()
@@ -78,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
                         + orderId));
         return order.getOrderItems().stream()
                 .map(orderItemMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

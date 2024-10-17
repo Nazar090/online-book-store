@@ -1,4 +1,4 @@
-package com.example.onlinebookstore.dto.user;
+package com.example.onlinebookstore.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
