@@ -15,7 +15,6 @@ import com.example.onlinebookstore.repository.CartItemRepository;
 import com.example.onlinebookstore.repository.OrderItemRepository;
 import com.example.onlinebookstore.repository.OrderRepository;
 import com.example.onlinebookstore.repository.ShoppingCartRepository;
-import com.example.onlinebookstore.repository.UserRepository;
 import com.example.onlinebookstore.service.OrderService;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
@@ -29,7 +28,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class OrderServiceImpl implements OrderService {
-    private final UserRepository userRepository;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final ShoppingCartRepository shoppingCartRepository;
@@ -42,21 +40,14 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto createOrder(Long userId, OrderRequestDto requestDto) {
         Order order = orderMapper.toEntity(requestDto);
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId);
-
-        order.setUser(userRepository.findById(userId).orElseThrow());
+        if (shoppingCart == null) {
+            throw new EntityNotFoundException("Shopping cart not found for user id: "
+                    + userId);
+        }
+        order.setUser(shoppingCart.getUser());
         order.setTotal(getTotal(shoppingCart));
         order.setOrderDate(LocalDateTime.now());
-        Set<OrderItem> orderItems = shoppingCart.getCartItems().stream()
-                .map(cartItem -> {
-                    OrderItem orderItem = new OrderItem();
-                    orderItem.setOrder(order);
-                    orderItem.setBook(cartItem.getBook());
-                    orderItem.setQuantity(cartItem.getQuantity());
-                    orderItem.setPrice(cartItem.getBook().getPrice());
-                    return orderItem;
-                })
-                .collect(Collectors.toSet());
-        order.setOrderItems(orderItems);
+        order.setOrderItems(createOrderItems(shoppingCart, order));
 
         cartItemRepository.deleteAllByShoppingCartId(shoppingCart.getId());
         return orderMapper.toDto(orderRepository.save(order));
@@ -105,5 +96,18 @@ public class OrderServiceImpl implements OrderService {
             total = total.add(cartItem.getBook().getPrice());
         }
         return total;
+    }
+
+    private Set<OrderItem> createOrderItems(ShoppingCart shoppingCart, Order order) {
+        return shoppingCart.getCartItems().stream()
+                .map(cartItem -> {
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.setOrder(order);
+                    orderItem.setBook(cartItem.getBook());
+                    orderItem.setQuantity(cartItem.getQuantity());
+                    orderItem.setPrice(cartItem.getBook().getPrice());
+                    return orderItem;
+                })
+                .collect(Collectors.toSet());
     }
 }
