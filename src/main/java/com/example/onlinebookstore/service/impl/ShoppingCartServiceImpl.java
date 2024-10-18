@@ -13,7 +13,6 @@ import com.example.onlinebookstore.model.User;
 import com.example.onlinebookstore.repository.BookRepository;
 import com.example.onlinebookstore.repository.CartItemRepository;
 import com.example.onlinebookstore.repository.ShoppingCartRepository;
-import com.example.onlinebookstore.repository.UserRepository;
 import com.example.onlinebookstore.service.ShoppingCartService;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-    private final UserRepository userRepository;
     private final ShoppingCartRepository shoppingCartRepository;
     private final CartItemRepository cartItemRepository;
     private final BookRepository bookRepository;
