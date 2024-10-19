@@ -42,7 +42,6 @@ public class OrderServiceImpl implements OrderService {
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId)
                 .orElseThrow(() ->
                 new EntityNotFoundException("Shopping cart not found for user id: " + userId));
-
         order.setUser(shoppingCart.getUser());
         order.setTotal(getTotal(shoppingCart));
         order.setOrderDate(LocalDateTime.now());
