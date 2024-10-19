@@ -39,11 +39,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto createOrder(Long userId, OrderRequestDto requestDto) {
         Order order = orderMapper.toEntity(requestDto);
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId);
-        if (shoppingCart == null) {
-            throw new EntityNotFoundException("Shopping cart not found for user id: "
-                    + userId);
-        }
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId)
+                .orElseThrow(() ->
+                new EntityNotFoundException("Shopping cart not found for user id: " + userId));
+
         order.setUser(shoppingCart.getUser());
         order.setTotal(getTotal(shoppingCart));
         order.setOrderDate(LocalDateTime.now());
