@@ -20,7 +20,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: status
-                  type: TINYINT
+                  type: ENUM('completed', 'delivered', 'processing')
                   constraints:
                     nullable: false
               - column:
