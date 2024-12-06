@@ -78,11 +78,12 @@ class BookControllerTest {
 
         // Then
         Assertions.assertEquals(mutableExpectedBooks.size(), mutableActualBooks.size());
-        Assertions.assertEquals(mutableExpectedBooks.get(0).getTitle(), mutableActualBooks.get(0).getTitle());
-        Assertions.assertEquals(mutableExpectedBooks.get(0).getId(), mutableActualBooks.get(0).getId());
+        Assertions.assertEquals(mutableExpectedBooks.get(0).getTitle(),
+                mutableActualBooks.get(0).getTitle());
+        Assertions.assertEquals(mutableExpectedBooks.get(0).getId(),
+                mutableActualBooks.get(0).getId());
 
     }
-
 
     @Test
     @Sql(scripts = "classpath:database/books/add-books.sql",

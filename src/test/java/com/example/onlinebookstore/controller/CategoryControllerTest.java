@@ -1,7 +1,10 @@
 package com.example.onlinebookstore.controller;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.onlinebookstore.dto.category.CategoryDto;
@@ -43,9 +46,9 @@ class CategoryControllerTest {
 
     @Test
     @Sql(scripts = "classpath:database/categories/add-categories.sql",
-         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/categories/cleanup-categories.sql",
-         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(roles = "ADMIN")
     void createCategory_ShouldCreateAndReturnCategory() throws Exception {
         // Given
@@ -71,9 +74,9 @@ class CategoryControllerTest {
 
     @Test
     @Sql(scripts = "classpath:database/categories/add-categories.sql",
-         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/categories/cleanup-categories.sql",
-         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(roles = "USER")
     void getAllCategories_ShouldReturnAllCategories() throws Exception {
         // When
@@ -89,14 +92,15 @@ class CategoryControllerTest {
         );
 
         Assertions.assertFalse(actualCategories.isEmpty(), "The category list should not be empty");
-        Assertions.assertEquals(3, actualCategories.size(), "There should be 3 categories in the list");
+        Assertions.assertEquals(3, actualCategories.size(),
+                "There should be 3 categories in the list");
     }
 
     @Test
     @Sql(scripts = "classpath:database/categories/add-categories.sql",
-         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/categories/cleanup-categories.sql",
-         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(roles = "USER")
     void getCategoryById_ShouldReturnCategory() throws Exception {
         // Given
@@ -118,9 +122,9 @@ class CategoryControllerTest {
 
     @Test
     @Sql(scripts = "classpath:database/categories/add-categories.sql",
-         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/categories/cleanup-categories.sql",
-         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(roles = "ADMIN")
     void updateCategory_ShouldUpdateAndReturnCategory() throws Exception {
         // Given
@@ -147,9 +151,9 @@ class CategoryControllerTest {
 
     @Test
     @Sql(scripts = "classpath:database/categories/add-categories.sql",
-         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/categories/cleanup-categories.sql",
-         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(roles = "ADMIN")
     void deleteCategory_ShouldReturnNoContent() throws Exception {
         // Given
