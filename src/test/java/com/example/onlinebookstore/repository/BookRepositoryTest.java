@@ -26,7 +26,7 @@ public class BookRepositoryTest {
     @Test
     @Sql(scripts = "classpath:database/books/setup-books-and-categories.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(scripts = "classpath:database/books/cleanup-books-and-categories.sql",
+    @Sql(scripts = "classpath:database/books/cleanup-books.sql",
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void shouldFindBooksByCategoryId() {
         Long categoryId = 1L;
