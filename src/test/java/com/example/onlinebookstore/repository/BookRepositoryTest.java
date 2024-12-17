@@ -14,6 +14,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+@Sql(scripts = "classpath:database/add-books-with-categories.sql",
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "classpath:database/cleanup-tables.sql",
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -24,16 +28,12 @@ public class BookRepositoryTest {
     private BookRepository bookRepository;
 
     @Test
-    @Sql(scripts = "classpath:database/books/setup-books-and-categories.sql",
-            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(scripts = "classpath:database/books/cleanup-books.sql",
-            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void shouldFindBooksByCategoryId() {
-        Long categoryId = 1L;
+        Long categoryId = 3L;
         List<Book> books = bookRepository.findAllByCategoryId(categoryId);
 
         assertNotNull(books, "The result should not be null");
-        assertEquals(1, books.size(), "There should be one book in the specified category");
-        assertEquals("The Great Gatsby", books.get(0).getTitle(), "The book title should match");
+        assertEquals(1, books.size(), "There should be two books in the specified category");
+        assertEquals("Book 2", books.get(0).getTitle(), "The book title should match");
     }
 }

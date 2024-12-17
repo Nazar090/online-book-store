@@ -79,6 +79,7 @@ class BookServiceTest {
         BookDto result = bookService.save(createBookRequestDto);
 
         assertEquals(bookDto, result);
+
         verify(bookMapper).toBookEntity(createBookRequestDto);
         verify(bookRepository).save(book);
         verify(bookMapper).toDto(book);
@@ -94,6 +95,7 @@ class BookServiceTest {
 
         assertEquals(1, result.size());
         assertEquals(bookDto, result.get(0));
+
         verify(bookRepository).findAll(Pageable.unpaged());
         verify(bookMapper).toDto(book);
     }
@@ -106,6 +108,7 @@ class BookServiceTest {
         BookDto result = bookService.findById(1L);
 
         assertEquals(bookDto, result);
+
         verify(bookRepository).findById(1L);
         verify(bookMapper).toDto(book);
     }
@@ -114,8 +117,16 @@ class BookServiceTest {
     void testFindById_NotFound() {
         when(bookRepository.findById(1L)).thenReturn(Optional.empty());
 
+        EntityNotFoundException exception = assertThrows(
+                EntityNotFoundException.class,
+                () -> bookService.findById(1L)
+        );
+
+        String expectedMessage = "Book not found by id: 1";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage, "The error message should match");
         assertThrows(EntityNotFoundException.class, () -> bookService.findById(1L));
-        verify(bookRepository).findById(1L);
     }
 
     @Test
@@ -127,6 +138,7 @@ class BookServiceTest {
         BookDto result = bookService.updateBook(1L, createBookRequestDto);
 
         assertEquals(bookDto, result);
+
         verify(bookRepository).findById(1L);
         verify(bookMapper).updateBookFromDto(createBookRequestDto, book);
         verify(bookRepository).save(book);
@@ -137,9 +149,17 @@ class BookServiceTest {
     void testUpdateBook_NotFound() {
         when(bookRepository.findById(1L)).thenReturn(Optional.empty());
 
+        EntityNotFoundException exception = assertThrows(
+                EntityNotFoundException.class,
+                () -> bookService.findById(1L)
+        );
+
+        String expectedMessage = "Book not found by id: 1";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage, "The error message should match");
         assertThrows(EntityNotFoundException.class,
                 () -> bookService.updateBook(1L, createBookRequestDto));
-        verify(bookRepository).findById(1L);
     }
 
     @Test
@@ -151,16 +171,16 @@ class BookServiceTest {
 
     @Test
     void testFindAllByCategoryId_Success() {
-        when(bookRepository.findAllByCategoryId(1L)).thenReturn(List.of(book));
         BookDtoWithoutCategoryIds bookDtoWithoutCategoryIds = new BookDtoWithoutCategoryIds();
         bookDtoWithoutCategoryIds.setId(1L);
         bookDtoWithoutCategoryIds.setTitle("Sample Book");
+
+        when(bookRepository.findAllByCategoryId(1L)).thenReturn(List.of(book));
         when(bookMapper.toDtoWithoutCategories(book)).thenReturn(bookDtoWithoutCategoryIds);
-
         List<BookDtoWithoutCategoryIds> result = bookService.findAllByCategoryId(1L);
-
         assertEquals(1, result.size());
         assertEquals(bookDtoWithoutCategoryIds, result.get(0));
+
         verify(bookRepository).findAllByCategoryId(1L);
         verify(bookMapper).toDtoWithoutCategories(book);
     }

@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.onlinebookstore.dto.category.CategoryDto;
 import com.example.onlinebookstore.dto.category.CategoryRequestDto;
-import com.example.onlinebookstore.security.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -17,22 +16,22 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+@Sql(scripts = "classpath:database/add-books-with-categories.sql",
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "classpath:database/cleanup-tables.sql",
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CategoryControllerTest {
     protected static MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @MockBean
-    private JwtUtil jwtUtil;
 
     @BeforeAll
     static void beforeAll(
@@ -45,10 +44,6 @@ class CategoryControllerTest {
     }
 
     @Test
-    @Sql(scripts = "classpath:database/categories/add-categories.sql",
-            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(scripts = "classpath:database/categories/cleanup-categories.sql",
-            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(roles = "ADMIN")
     void createCategory_ShouldCreateAndReturnCategory() throws Exception {
         // Given
@@ -73,10 +68,6 @@ class CategoryControllerTest {
     }
 
     @Test
-    @Sql(scripts = "classpath:database/categories/add-categories.sql",
-            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(scripts = "classpath:database/categories/cleanup-categories.sql",
-            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(roles = "USER")
     void getAllCategories_ShouldReturnAllCategories() throws Exception {
         // When
@@ -97,10 +88,6 @@ class CategoryControllerTest {
     }
 
     @Test
-    @Sql(scripts = "classpath:database/categories/add-categories.sql",
-            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(scripts = "classpath:database/categories/cleanup-categories.sql",
-            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(roles = "USER")
     void getCategoryById_ShouldReturnCategory() throws Exception {
         // Given
@@ -121,10 +108,6 @@ class CategoryControllerTest {
     }
 
     @Test
-    @Sql(scripts = "classpath:database/categories/add-categories.sql",
-            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(scripts = "classpath:database/categories/cleanup-categories.sql",
-            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(roles = "ADMIN")
     void updateCategory_ShouldUpdateAndReturnCategory() throws Exception {
         // Given
@@ -150,10 +133,6 @@ class CategoryControllerTest {
     }
 
     @Test
-    @Sql(scripts = "classpath:database/categories/add-categories.sql",
-            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(scripts = "classpath:database/categories/cleanup-categories.sql",
-            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(roles = "ADMIN")
     void deleteCategory_ShouldReturnNoContent() throws Exception {
         // Given
