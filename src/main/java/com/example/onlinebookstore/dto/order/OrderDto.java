@@ -18,5 +18,4 @@ public class OrderDto {
     private LocalDateTime orderDate;
     private BigDecimal total;
     private Order.Status status;
-
 }

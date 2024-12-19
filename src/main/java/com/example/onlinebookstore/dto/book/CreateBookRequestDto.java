@@ -6,13 +6,15 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Set;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Setter
 @Getter
-@AllArgsConstructor
+@Accessors(chain = true)
+@NoArgsConstructor
 public class CreateBookRequestDto {
     @NotBlank
     private String title;
