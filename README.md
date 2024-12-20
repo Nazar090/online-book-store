@@ -40,18 +40,29 @@ The project is structured to ensure maintainability and scalability:
 - **Validation**: Ensures data integrity using annotations and custom validators.
 
 ## Setup Instructions
+### Requirements
+- **JDK**: Ensure you have JDK 17 or later installed.
+- **Docker**: Make sure Docker is installed and running on your machine.
+- **Docker Compose**: Ensure Docker Compose is available for managing multi-container setups.
+
+### Steps to Run the Project
 1. Clone the repository:
    ```bash
    git clone https://github.com/Nazar090/online-book-store.git
    cd online-book-store
    ```
-2. Build Docker containers:
+2. Build Docker containers and start the application:
    ```bash
    docker-compose up --build
    ```
 3. Access the application:
    - Backend API: `http://localhost:8080`
    - Swagger UI: `http://localhost:8080/swagger-ui.html`
+
+If you prefer to run the application locally without Docker, ensure the required database is running and configured, then use:
+```bash
+mvn spring-boot:run
+```
 
 ## API Endpoints
 ### Authentication
@@ -94,10 +105,10 @@ The project is structured to ensure maintainability and scalability:
 
 ## Screenshots
 - **Application Structure**:
-  ![Application Structure](/Users/nazar5n/IdeaProjects/online-book-store/architecture/Screenshot 2024-12-20 at 09.53.08.png)
-  ![Application Structure](/Users/nazar5n/IdeaProjects/online-book-store/architecture/Screenshot 2024-12-20 at 09.53.25.png)d
+  ![Application Structure](./docs/screenshots/architecture1.png)
+  ![Application Structure](./docs/screenshots/architecture2.png)
 - **Swagger UI**:
-  ![Swagger UI](/Users/nazar5n/IdeaProjects/online-book-store/architecture/Screenshot 2024-12-20 at 10.08.38.png)
+  ![Swagger UI](./docs/screenshots/swagger.png)
 
 ## Contributions
 Contributions are welcome! Feel free to fork the repository and submit a pull request with your improvements.
@@ -105,4 +116,3 @@ Contributions are welcome! Feel free to fork the repository and submit a pull re
 ---
 
 Thank you for exploring the Online Book Store project.
-
