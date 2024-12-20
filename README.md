@@ -1,7 +1,7 @@
 # Online Book Store
 
 ## Introduction
-The Online Book Store is a modern web application designed to streamline the process of purchasing books online.
+The Online Book Store is a modern web application designed to streamline the process of purchasing books online. This platform was created to simplify book shopping for users while providing store owners with an efficient way to manage their inventory and sales. It addresses challenges like accessibility, secure transactions, and user engagement through a seamless interface and robust backend technologies.
 
 ## Features
 - **User Management**: Secure registration, login, and role-based access (USER, ADMIN).
@@ -14,7 +14,7 @@ The Online Book Store is a modern web application designed to streamline the pro
 
 ## Technologies Used
 - **Backend**:
-  - Spring Boot (2.6+)
+  - Spring Boot
   - Spring Security
   - Spring Data JPA
   - Liquibase
@@ -45,62 +45,64 @@ The project is structured to ensure maintainability and scalability:
    git clone https://github.com/Nazar090/online-book-store.git
    cd online-book-store
    ```
-2. Install dependencies:
+2. Build Docker containers:
    ```bash
-   mvn clean install
+   docker-compose up --build
    ```
-3. Set up the database:
-   - Install PostgreSQL.
-   - Create a database named `online_book_shop`.
-   - Use the provided Liquibase scripts (`resources/db/changelog`) to initialize the database schema.
-4. Run the application:
-   ```bash
-   mvn spring-boot:run
-   ```
-5. Access the application:
+3. Access the application:
    - Backend API: `http://localhost:8080`
    - Swagger UI: `http://localhost:8080/swagger-ui.html`
 
 ## API Endpoints
-Here are some of the key API endpoints:
-- **Authentication**:
-  - `POST /api/auth/register`: Register a new user.
-  - `POST /api/auth/login`: Authenticate and get a JWT token.
-- **Books**:
-  - `GET /api/books`: Get a list of books.
-  - `POST /api/books`: Add a new book (ADMIN only).
-- **Categories**:
-  - `GET /api/categories`: Get all categories.
-  - `POST /api/categories`: Add a new category (ADMIN only).
-- **Shopping Cart**:
-  - `POST /api/cart`: Add an item to the cart.
-  - `GET /api/cart`: View items in the cart.
-- **Orders**:
-  - `POST /api/orders`: Place an order.
-  - `GET /api/orders`: View user orders.
+### Authentication
+- `POST /api/auth/register`: Register a new user.
+- `POST /api/auth/login`: Authenticate and get a JWT token.
+
+### Books
+- `GET /api/books`: Retrieve a list of all books with pagination and sorting.
+- `GET /api/books/{id}`: Retrieve details of a specific book by its ID.
+- `POST /api/books`: Add a new book (ADMIN only).
+- `PUT /api/books/{id}`: Update an existing book by ID (ADMIN only).
+- `DELETE /api/books/{id}`: Delete a book by ID (ADMIN only).
+
+### Categories
+- `GET /api/categories`: Retrieve a list of all categories with pagination and sorting.
+- `GET /api/categories/{id}`: Retrieve a specific category by its ID.
+- `POST /api/categories`: Add a new category (ADMIN only).
+- `PUT /api/categories/{id}`: Update an existing category by ID (ADMIN only).
+- `DELETE /api/categories/{id}`: Delete a category by ID (ADMIN only).
+- `GET /api/categories/{id}/books`: Retrieve all books in a category by category ID.
+
+### Orders
+- `POST /api/orders`: Place a new order.
+- `GET /api/orders`: Retrieve all orders placed by the user.
+- `GET /api/orders/{id}`: Retrieve details of a specific order by its ID.
+- `GET /api/orders/{orderId}/items`: Retrieve all items within a specific order by order ID.
+- `GET /api/orders/{orderId}/items/{id}`: Retrieve a specific item within an order by order ID and item ID.
+- `PUT /api/orders/{id}`: Update the status of a specific order (ADMIN only).
+
+### Shopping Cart
+- `POST /api/cart`: Add an item to the shopping cart.
+- `GET /api/cart`: Retrieve the shopping cart for the logged-in user.
+- `PUT /api/cart/items/{cartItemId}`: Update the quantity of an item in the cart.
+- `DELETE /api/cart/items/{cartItemId}`: Remove an item from the shopping cart by ID.
 
 ## Challenges and Solutions
 1. **Data Security**: Implemented JWT and BCrypt to secure user data and authentication.
 2. **Database Migration**: Used Liquibase for version-controlled schema management.
 3. **Scalability**: Designed the application to support future feature expansions by adhering to clean architecture principles.
 
-## Testing
-- **Test Coverage**: Achieved over 50% line coverage for critical components like `BookController`, `CategoryController`, and service layers.
-- **Testcontainers**: Used for dynamic database testing during integration tests.
-
-## Postman Collection
-A Postman collection is available in the `resources/postman` directory. Import it into Postman to test the API endpoints with pre-configured requests and environment variables.
-
 ## Screenshots
 - **Application Structure**:
-  ![Application Structure](./docs/screenshots/structure.png)
+  ![Application Structure](/Users/nazar5n/IdeaProjects/online-book-store/architecture/Screenshot 2024-12-20 at 09.53.08.png)
+  ![Application Structure](/Users/nazar5n/IdeaProjects/online-book-store/architecture/Screenshot 2024-12-20 at 09.53.25.png)d
 - **Swagger UI**:
-  ![Swagger UI](./docs/screenshots/swagger.png)
+  ![Swagger UI](/Users/nazar5n/IdeaProjects/online-book-store/architecture/Screenshot 2024-12-20 at 10.08.38.png)
 
 ## Contributions
 Contributions are welcome! Feel free to fork the repository and submit a pull request with your improvements.
 
 ---
 
-Thank you for exploring the Online Book Store project. I hope you find it inspiring and insightful. If you have any questions, feel free to reach out via the Issues 
-section on GitHub.
+Thank you for exploring the Online Book Store project.
+
